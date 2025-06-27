@@ -2,6 +2,7 @@ package pameguti.bootcamp.miempresa;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,12 +10,19 @@ import org.junit.jupiter.api.Test;
 
 class CursoServiceTest {
 
-    @Test
-    void red_CalcularPromedioFallaPorNoImplementacion() {
-        CursoService svc = new CursoService();
-            svc.calcularPromedio(Arrays.asList(5.0, 7.0, 9.0));
-        
-    }
+@Test
+void red_CalcularPromedioFallaPorNoImplementation() {
+    CursoService svc = new CursoService() {
+        @Override
+        public double calcularPromedio(List<Double> notas) {
+            throw new UnsupportedOperationException("No implementado aún");
+        }
+    };
+    assertThrows(UnsupportedOperationException.class,
+                () -> svc.calcularPromedio(Arrays.asList(1.0)));
+}
+
+
     @Test
     void green_CalcularPromedioConValoresCorrectos_RetornaPromedio() {
         CursoService svc = new CursoService();
